@@ -1,3 +1,3 @@
 class Order < ApplicationRecord
-    belongs_to :Creator
+    belongs_to :creator
 end
