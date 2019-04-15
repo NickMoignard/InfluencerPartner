@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_15_032125) do
+ActiveRecord::Schema.define(version: 2019_04_15_034122) do
 
 # Could not dump table "creators" because of following StandardError
 #   Unknown type 'resources' for column 'order_ids'
@@ -35,6 +35,14 @@ ActiveRecord::Schema.define(version: 2019_04_15_032125) do
     t.integer "inventory"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "shops", force: :cascade do |t|
+    t.string "shopify_domain", null: false
+    t.string "shopify_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 
   create_table "stocks", force: :cascade do |t|
