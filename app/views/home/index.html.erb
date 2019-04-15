@@ -5,24 +5,31 @@
     });
   </script>
 <% end %>
-<h2>Products</h2>
 
-<ul>
-  <% @products.each do |product| %>
-    <li><%= link_to product.title, "https://#{@shop_session.url}/admin/products/#{product.id}", target: "_top" %></li>
-  <% end %>
-</ul>
+<h1>Creators</h1>
 
-<hr>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<h2>Webhooks</h2>
-
-<% if @webhooks.present? %>
-  <ul>
-    <% @webhooks.each do |webhook| %>
-      <li><%= webhook.topic %> : <%= webhook.address %></li>
+  <tbody>
+    <% @creators.each do |creator| %>
+      <tr>
+        <td><%= creator.name %></td>
+        <td><%= creator.code %></td>
+        <td><%= link_to 'Show', creator %></td>
+        <td><%= link_to 'Edit', edit_creator_path(creator) %></td>
+        <td><%= link_to 'Destroy', creator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
     <% end %>
-  </ul>
-<% else %>
-  <p>This app has not created any webhooks for this Shop. Add webhooks to your ShopifyApp initializer if you need webhooks</p>
-<% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Creator', new_creator_path %>

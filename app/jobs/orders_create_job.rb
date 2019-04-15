@@ -7,8 +7,18 @@ class OrdersCreateJob < ActiveJob::Base
         if attr['name'] == 'creator'
           binding.pry
           creator = Creator.find_by(code: attr['value'].downcase)
-          order = Order.create(order_id: webhook['id'], creator: creator)
-          binding.pry
+          
+          if creator.nil?
+                        # incorrect creator code
+            # don't save order
+          else
+            order = Order.create(order_id: webhook['id'], creator: creator)
+          end
+        else
+          puts '=================================='
+          puts 'additional note_attribute found! :'
+          puts attr['name']
+          puts '=================================='
         end
       end
     end
