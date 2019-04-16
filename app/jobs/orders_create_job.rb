@@ -5,7 +5,7 @@ class OrdersCreateJob < ActiveJob::Base
     shop.with_shopify_session do
       webhook['note_attributes'].each do |attr|
         if attr['name'] == 'creator'
-          binding.pry
+
           creator = Creator.find_by(code: attr['value'].downcase)
           
           if creator.nil?

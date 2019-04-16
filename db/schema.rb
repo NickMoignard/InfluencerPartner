@@ -10,17 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_022931) do
+ActiveRecord::Schema.define(version: 2019_04_16_080409) do
 
-# Could not dump table "creators" because of following StandardError
-#   Unknown type 'resources' for column 'order_ids'
+  create_table "creators", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "orders", force: :cascade do |t|
     t.integer "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "creator_id"
-    t.boolean "paid"
+    t.boolean "paid", default: false
     t.index ["creator_id"], name: "index_orders_on_creator_id"
   end
 

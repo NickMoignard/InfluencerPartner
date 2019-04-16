@@ -41,6 +41,7 @@
   <div class="row">
     <h2><%= creator.camelcase %></h2>
     <p>Orders to pay out: <%= array.length %></p>
+    <%= link_to 'Payout', payout_path(creator), remote: true %>
   </div>
 <% end %>
 
