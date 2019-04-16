@@ -9,7 +9,7 @@ class OrdersCreateJob < ActiveJob::Base
           creator = Creator.find_by(code: attr['value'].downcase)
           
           if creator.nil?
-                        # incorrect creator code
+            # incorrect creator code
             # don't save order
           else
             order = Order.create(order_id: webhook['id'], creator: creator)
