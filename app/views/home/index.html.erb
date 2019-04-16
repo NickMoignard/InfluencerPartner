@@ -33,3 +33,15 @@
 <br>
 
 <%= link_to 'New Creator', new_creator_path %>
+
+<hr>
+
+<h1>Orders</h1>
+<% @orders.each do |creator,array| %>
+  <div class="row">
+    <h2><%= creator.camelcase %></h2>
+    <p>Orders to pay out: <%= array.length %></p>
+  </div>
+<% end %>
+
+
