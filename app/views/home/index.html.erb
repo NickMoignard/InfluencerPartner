@@ -1,49 +1,52 @@
-<% content_for :javascript do %>
-  <script type="text/javascript">
-    ShopifyApp.ready(function(){
-      ShopifyApp.Bar.initialize({ title: "Home" });
-    });
-  </script>
-<% end %>
+  <% content_for :javascript do %>
+    <script type="text/javascript">
+      ShopifyApp.ready(function(){
+        ShopifyApp.Bar.initialize({ title: "Home" });
+      });
+    </script>
+  <% end %>
 
-<h1>Creators</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="container">
 
-  <tbody>
-    <% @creators.each do |creator| %>
+  <h1>Creators</h1>
+
+  <table>
+    <thead>
       <tr>
-        <td><%= creator.name %></td>
-        <td><%= creator.code %></td>
-        <td><%= link_to 'Show', creator %></td>
-        <td><%= link_to 'Edit', edit_creator_path(creator) %></td>
-        <td><%= link_to 'Destroy', creator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Code</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @creators.each do |creator| %>
+        <tr>
+          <td><%= creator.name %></td>
+          <td><%= creator.code %></td>
+          <td><%= link_to 'Show', creator %></td>
+          <td><%= link_to 'Edit', edit_creator_path(creator) %></td>
+          <td><%= link_to 'Destroy', creator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Creator', new_creator_path %>
+  <br>
 
-<hr>
+  <%= link_to 'New Creator', new_creator_path %>
 
-<h1>Orders</h1>
-<% @creator_orders.each_with_index do |(creator, array), i| %>
-  <div class="row">
-    <h2><%= creator.camelcase %></h2>
-    <p>Orders to pay out: <%= array.length %></p>
-    <p>Total: <%= creator_orders_value(creator) %></p>
-    <%= link_to 'Payout', payout_path(creator), remote: true %>
-  </div>
-<% end %>
+  <hr>
 
+  <h1>Orders</h1>
+  <% @creator_orders.each_with_index do |(creator, array), i| %>
+    <div class="row">
+      <h2><%= creator.camelcase %></h2>
+      <p>Orders to pay out: <%= array.length %></p>
+      <p>Total: <%= creator_orders_value(creator) %></p>
+      <%= link_to 'Payout', payout_path(creator), remote: true %>
+    </div>
+  <% end %>
 
+</div>

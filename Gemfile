@@ -6,6 +6,8 @@ ruby '2.3.7'
 gem 'shopify_app'
 gem 'dotenv-rails'
 gem 'dotenv'
+gem 'bootstrap', '~> 4.3', '>= 4.3.1'
+gem 'jquery-rails'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

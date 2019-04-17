@@ -4,14 +4,9 @@ class HomeController < ShopifyApp::AuthenticatedController
     @webhooks = ShopifyAPI::Webhook.find(:all)
     @creator_orders = {}
     @creators = Creator.all
-    @totals = {}
     Creator.all.each do |c|
       @creator_orders[c.code] = Order.where(:creator => c).where(:paid => false)
-      @totals[c.code] = creator_orders_value(c)
     end
-
-    
-    
   end
 
   def payout
