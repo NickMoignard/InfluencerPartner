@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_16_080409) do
+ActiveRecord::Schema.define(version: 2019_04_17_025341) do
 
   create_table "creators", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_04_16_080409) do
     t.datetime "updated_at", null: false
     t.integer "creator_id"
     t.boolean "paid", default: false
+    t.float "value", default: -1.0
     t.index ["creator_id"], name: "index_orders_on_creator_id"
   end
 
