@@ -27,7 +27,7 @@ class HomeController < ShopifyApp::AuthenticatedController
   def creator_orders_value(creator)
     #RAKIBUL
 
-    creator_orders = Order.where(creator: creator)
+    creator_orders = Order.where(:creator => Creator.find_by( :code => creator ) )
     store_orders = []
     total_price_usd = 0.0
 
@@ -35,9 +35,22 @@ class HomeController < ShopifyApp::AuthenticatedController
       store_orders.append(ShopifyAPI::Order.find(o.order_id))
     end
     store_orders.each do |o|
-      total_price_usd = total_price_usd + o.total_price_usd.to_f
+      o.line_items.each do |item|
+        product = ShopifyAPI::Product.find(item.product_id)
+        tags = product.tags.split(', ')
+        ProductTag.all.each do |t|
+          if tags.include? t.tag
+            # do not add to total
+          else
+            total_price_usd = total_price_usd + 1
+          end
+        end
+      end
+
+      
     end
 
+  
     return total_price_usd
   end
   helper_method :creator_orders_value

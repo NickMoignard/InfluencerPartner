@@ -14,3 +14,5 @@ Creator.create([
     {:name => 'Fitz', :code => 'fitz', :profit_share => :profit },
     {:name => 'Anything4Views', :code => 'views', :profit_share => :profit }
 ])
+
+ProductTag.create({:tag => 'merch'})
