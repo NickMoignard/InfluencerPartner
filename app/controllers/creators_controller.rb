@@ -10,6 +10,7 @@ class CreatorsController < ShopifyApp::AuthenticatedController
   # GET /creators/1
   # GET /creators/1.json
   def show
+    @orders = Order.where(:creator => @creator)
   end
 
   # GET /creators/new
