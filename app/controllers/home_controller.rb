@@ -1,4 +1,6 @@
 class HomeController < ShopifyApp::AuthenticatedController
+  helper ApplicationHelper
+
   def index
     @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
     @webhooks = ShopifyAPI::Webhook.find(:all)
@@ -10,13 +12,16 @@ class HomeController < ShopifyApp::AuthenticatedController
   end
 
   def payout
+    
     #RAKIBUL
     if params[:code].nil? 
-      puts 'Code parameter is nil'
+      flash[:error] = "No code sent in URL Parameters"
     else
       creator = Creator.find_by(code: params[:code])
       PayoutCreatorJob.perform_now(creator)
+      flash[:success] = "Generating report now"
     end
+    render
   end
 
   def creator_orders_value(creator)

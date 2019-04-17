@@ -7,46 +7,28 @@
   <% end %>
 
 
-<div class="container">
 
-  <h1>Creators</h1>
+  <%= render 'shared/flash' %>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Code</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
+  <h1>Codes</h1>
 
-    <tbody>
-      <% @creators.each do |creator| %>
-        <tr>
-          <td><%= creator.name %></td>
-          <td><%= creator.code %></td>
-          <td><%= link_to 'Show', creator %></td>
-          <td><%= link_to 'Edit', edit_creator_path(creator) %></td>
-          <td><%= link_to 'Destroy', creator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
-  <%= link_to 'New Creator', new_creator_path %>
-
-  <hr>
-
-  <h1>Orders</h1>
+  
   <% @creator_orders.each_with_index do |(creator, array), i| %>
-    <div class="row">
-      <h2><%= creator.camelcase %></h2>
-      <p>Orders to pay out: <%= array.length %></p>
-      <p>Total: <%= creator_orders_value(creator) %></p>
-      <%= link_to 'Payout', payout_path(creator), remote: true %>
-    </div>
+
+    <% if i % 3 == 0 %><div class="row"><% end %>
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            <h2><%= creator.camelcase %></h2>
+          </div>
+          <div class="card-body">
+            <p class="card-title">Orders: <%= array.length %></p>
+            <p class="card-text">Totalling <%= creator_orders_value(creator) %> in Revenue</p>
+            <%= link_to 'Payout', payout_path(creator), { :class => 'btn btn-secondary', :remote => true} %>
+          </div>
+        </div>
+      </div>
+    <% if i % 3 == 2 %></div><% end %>
   <% end %>
 
-</div>
+
