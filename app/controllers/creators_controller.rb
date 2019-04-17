@@ -70,6 +70,6 @@ class CreatorsController < ShopifyApp::AuthenticatedController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def creator_params
-      params.require(:creator).permit(:name, :code)
+      params.require(:creator).permit(:name, :code, :profit_share, :share)
     end
 end

@@ -2,12 +2,16 @@
 <%= render 'shared/flash' %>
 
 <br>
+
+  <h1>Influencers</h1>
 <div class="card">
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>
           <th>Name</th>
           <th>Code</th>
+          <th>Share from</th>
+          <th>Percentage</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -17,6 +21,14 @@
           <tr>
             <td><%= creator.name %></td>
             <td><%= creator.code %></td>
+            <td>
+              <% if creator.profit?  %>
+                Revenue
+              <% else %>
+                Profit
+              <% end %>
+            </td>
+            <td><%= creator.share %>%</td>
             <td><%= link_to 'Show', creator %></td>
             <td><%= link_to 'Edit', edit_creator_path(creator) %></td>
             <td><%= link_to 'Destroy', creator, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -25,6 +37,4 @@
       </tbody>
     </table>
   </div>
-  <br>
-
   <%= link_to 'New Creator', new_creator_path, {:class => 'btn btn-primary'} %>
