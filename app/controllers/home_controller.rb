@@ -9,10 +9,10 @@ class HomeController < ShopifyApp::AuthenticatedController
     Creator.all.each do |c|
       @creator_orders[c.code] = Order.where(:creator => c).where(:paid => false)
     end
+    check_for_fresh_install_and_update_orders_db
   end
 
   def payout
-    
     #RAKIBUL
     if params[:code].nil? 
       flash[:error] = "No code sent in URL Parameters"
@@ -42,4 +42,32 @@ class HomeController < ShopifyApp::AuthenticatedController
   end
   helper_method :creator_orders_value
 
+
+  def check_for_fresh_install_and_update_orders_db
+    if Order.all.length < 1
+      # fresh install
+      store_orders = ShopifyAPI::Order.find(:all)
+      store_orders.each do |o|
+        o.note_attributes.each do |attr|
+          if attr.name == 'creator'
+            creator = Creator.find_by(code: attr.value.downcase)
+            
+            if creator.nil?
+              # incorrect creator code
+              # don't save order
+            else
+              order = Order.create(order_id: o.id, creator: creator)
+            end
+          else
+            puts '=================================='
+            puts 'additional note_attribute found! :'
+            puts attr.name
+            puts '=================================='
+          end
+        end
+      end
+    else
+      # not a new install  
+    end 
+  end
 end

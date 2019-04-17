@@ -9,9 +9,8 @@
 
 
   <%= render 'shared/flash' %>
-
+  <br>
   <h1>Codes</h1>
-
   
   <% @creator_orders.each_with_index do |(creator, array), i| %>
 
@@ -28,7 +27,7 @@
           </div>
         </div>
       </div>
-    <% if i % 3 == 2 %></div><% end %>
+    <% if i % 3 == 2 || @creator_orders.length == i%></div><br><% end %>
   <% end %>
 
 
