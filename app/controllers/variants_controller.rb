@@ -1,4 +1,4 @@
-class VariantsController < ApplicationController
+class VariantsController < ShopifyApp::AuthenticatedController
   before_action :set_variant, only: [:show, :edit, :update, :destroy]
 
   # GET /variants

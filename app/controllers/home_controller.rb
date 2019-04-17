@@ -2,14 +2,15 @@ class HomeController < ShopifyApp::AuthenticatedController
   def index
     @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
     @webhooks = ShopifyAPI::Webhook.find(:all)
-    @orders = {}
+    @creator_orders = {}
     @creators = Creator.all
-
+    @totals = {}
     Creator.all.each do |c|
-      @orders[c.code] = Order.where(:creator => c).where(:paid => false)
+      @creator_orders[c.code] = Order.where(:creator => c).where(:paid => false)
+      @totals[c.code] = creator_orders_value(c)
     end
 
-    creator_orders_value(@creators.first)
+    
     
   end
 
@@ -22,8 +23,6 @@ class HomeController < ShopifyApp::AuthenticatedController
       PayoutCreatorJob.perform_now(creator)
     end
   end
-
-  private
 
   def creator_orders_value(creator)
     #RAKIBUL
@@ -41,6 +40,6 @@ class HomeController < ShopifyApp::AuthenticatedController
 
     return total_price_usd
   end
-
+  helper_method :creator_orders_value
 
 end

@@ -1,4 +1,4 @@
-class OrdersController < ApplicationController
+class OrdersController < ShopifyApp::AuthenticatedController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders

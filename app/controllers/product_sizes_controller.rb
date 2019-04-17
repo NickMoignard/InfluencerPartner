@@ -1,4 +1,4 @@
-class ProductSizesController < ApplicationController
+class ProductSizesController < ShopifyApp::AuthenticatedController
   before_action :set_product_size, only: [:show, :edit, :update, :destroy]
 
   # GET /product_sizes

@@ -1,4 +1,4 @@
-class CreatorsController < ApplicationController
+class CreatorsController < ShopifyApp::AuthenticatedController
   before_action :set_creator, only: [:show, :edit, :update, :destroy]
 
   # GET /creators

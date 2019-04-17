@@ -37,10 +37,11 @@
 <hr>
 
 <h1>Orders</h1>
-<% @orders.each do |creator,array| %>
+<% @creator_orders.each_with_index do |(creator, array), i| %>
   <div class="row">
     <h2><%= creator.camelcase %></h2>
     <p>Orders to pay out: <%= array.length %></p>
+    <p>Total: <%= creator_orders_value(creator) %></p>
     <%= link_to 'Payout', payout_path(creator), remote: true %>
   </div>
 <% end %>
