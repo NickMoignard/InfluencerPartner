@@ -2,14 +2,15 @@ class HomeController < ShopifyApp::AuthenticatedController
   helper ApplicationHelper
 
   def index
+
     @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
     @webhooks = ShopifyAPI::Webhook.find(:all)
     @creator_orders = {}
     @creators = Creator.all
     Creator.all.each do |c|
-      @creator_orders[c.code] = Order.where(:creator => c).where(:paid => false)
+      @creator_orders[c.code] = Order.where(creator: c).where(:paid => false)
     end
-    check_for_fresh_install_and_update_orders_db
+    check_for_fresh_install_and_update_dbs
   end
 
   def payout
@@ -36,7 +37,7 @@ class HomeController < ShopifyApp::AuthenticatedController
     end
     store_orders.each do |o|
       o.line_items.each do |item|
-        product = ShopifyAPI::Product.find(item.product_id)
+        product = Product.find_by(:name => item.title)
         tags = product.tags.split(', ')
         ProductTag.all.each do |t|
           if tags.include? t.tag
@@ -56,8 +57,8 @@ class HomeController < ShopifyApp::AuthenticatedController
   helper_method :creator_orders_value
 
 
-  def check_for_fresh_install_and_update_orders_db
-    if Order.all.length < 1
+  def check_for_fresh_install_and_update_dbs
+    if Order.count < 1
       # fresh install
       store_orders = ShopifyAPI::Order.find(:all)
       store_orders.each do |o|
@@ -82,5 +83,14 @@ class HomeController < ShopifyApp::AuthenticatedController
     else
       # not a new install  
     end 
+    if Product.count < 1
+      products = ShopifyAPI::Product.find(:all)
+      products.each do |product|
+        Product.create(:name => product.title, :tags => product.tags, :price => product.variants.first.price, :item_id => product.id )
+      end
+    else
+      # not a new install
+    end
+
   end
 end
