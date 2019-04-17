@@ -18,7 +18,7 @@
       <div class="col-4">
         <div class="card">
           <div class="card-header">
-            <h2><%= creator.camelcase %></h2>
+            <a href="<%= creator_path(creator_from_code(creator).id) %>"><h2><%= creator.camelcase %></h2></a>
           </div>
           <div class="card-body">
             <p class="card-title">Orders: <%= array.length %></p>

@@ -7,4 +7,8 @@ module ApplicationHelper
             when :alert then "alert alert-error"
         end
     end
+
+    def creator_from_code(code)
+        Creator.find_by(:code => code)
+    end
 end
