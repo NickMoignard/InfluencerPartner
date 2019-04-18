@@ -3,14 +3,16 @@ class HomeController < ShopifyApp::AuthenticatedController
 
   def index
 
-    @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
-    @webhooks = ShopifyAPI::Webhook.find(:all)
+    # @products = ShopifyAPI::Product.find(:all, params: { limit: 10 })
+    # @webhooks = ShopifyAPI::Webhook.find(:all)
     @creator_orders = {}
     @creators = Creator.all
-    Creator.all.each do |c|
-      @creator_orders[c.code] = Order.where(creator: c).where(:paid => false)
+    # Creator.all.each do |c|
+    #   @creator_orders[c.code] = Order.where(creator: c).where(:paid => false)
+    # end
+    unless old_install?
+      GetStoreInformationJob.perform_later(session[:shopify_domain])
     end
-    check_for_fresh_install_and_update_dbs
   end
 
   def payout
@@ -57,40 +59,7 @@ class HomeController < ShopifyApp::AuthenticatedController
   helper_method :creator_orders_value
 
 
-  def check_for_fresh_install_and_update_dbs
-    if Order.count < 1
-      # fresh install
-      store_orders = ShopifyAPI::Order.find(:all)
-      store_orders.each do |o|
-        o.note_attributes.each do |attr|
-          if attr.name == 'creator'
-            creator = Creator.find_by(code: attr.value.downcase)
-            
-            if creator.nil?
-              # incorrect creator code
-              # don't save order
-            else
-              order = Order.create(order_id: o.id, creator: creator)
-            end
-          else
-            puts '=================================='
-            puts 'additional note_attribute found! :'
-            puts attr.name
-            puts '=================================='
-          end
-        end
-      end
-    else
-      # not a new install  
-    end 
-    if Product.count < 1
-      products = ShopifyAPI::Product.find(:all)
-      products.each do |product|
-        Product.create(:name => product.title, :tags => product.tags, :price => product.variants.first.price, :item_id => product.id )
-      end
-    else
-      # not a new install
-    end
-
+  def old_install?
+    Shop.all.include? session[:shopify_domain]
   end
 end
