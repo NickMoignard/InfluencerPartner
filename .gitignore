@@ -32,3 +32,6 @@
 
 # Ignore API KEYS
 /.env
+
+# Ignore redis db snapshots
+/dump.rdb
