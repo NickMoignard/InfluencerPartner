@@ -35,4 +35,4 @@
 /.env
 
 # Ignore redis db snapshots
-/dump.rdb
+dump.rdb
