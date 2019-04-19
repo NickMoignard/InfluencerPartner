@@ -12,22 +12,22 @@
   <br>
   <h1>Codes</h1>
   
-  <% @creator_orders.each_with_index do |(creator, array), i| %>
+  <% @creators.each_with_index do |creator, i| %>
 
     <% if i % 3 == 0 %><div class="row"><% end %>
       <div class="col-4">
         <div class="card">
           <div class="card-header">
-            <a href="<%= creator_path(creator_from_code(creator).id) %>"><h2><%= creator.camelcase %></h2></a>
+            <a href="<%= creator_path(creator) %>"><h2><%= creator.name.camelcase %></h2></a>
           </div>
           <div class="card-body">
-            <p class="card-title">Orders: <%= array.length %></p>
+            <p class="card-title">Orders: <%= creator.orders.length %></p>
             <p class="card-text">Totalling <%= creator_orders_value(creator) %> in Revenue</p>
-            <%= link_to 'Payout', payout_path(creator), { :class => 'btn btn-secondary', :remote => true} %>
+            <%= link_to 'Payout', payout_path(creator.code), { :class => 'btn btn-secondary', :remote => true} %>
           </div>
         </div>
       </div>
-    <% if i % 3 == 2 || @creator_orders.length == i%></div><br><% end %>
+    <% if i % 3 == 2 || @creators.length == i%></div><br><% end %>
   <% end %>
 
 
