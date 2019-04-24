@@ -1,4 +1,4 @@
-class HomeController < ShopifyApp::AuthenticatedController
+class HomeController < ActionController::Base
   helper ApplicationHelper
 
   def index
@@ -9,9 +9,9 @@ class HomeController < ShopifyApp::AuthenticatedController
     @creators = Creator.all
     @creators.includes(:orders)
 
-    unless old_install?
-      GetStoreInformationJob.perform_later(session[:shopify_domain])
-    end
+    # unless old_install?
+    GetStoreInformationJob.perform_later('cool-shirtz.myshopify.com')
+    # end
   end
 
   def payout

@@ -32,7 +32,8 @@
 /config/master.key
 
 # Ignore API KEYS
-/.env
+.env
+/config/initializers/shopify_app.rb
 
 # Ignore redis db snapshots
 dump.rdb

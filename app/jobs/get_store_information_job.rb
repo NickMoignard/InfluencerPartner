@@ -9,11 +9,7 @@ class GetStoreInformationJob < ApplicationJob
     puts '~ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ~'
   
 
-    shop = Shop.find_by(:shopify_domain => shop_domain)
-    shop.init = true
-    shop.save
-    
-    shop.with_shopify_session do
+
 
       products = ShopifyAPI::Product.find(:all)
       products.each do |product|
@@ -60,6 +56,6 @@ class GetStoreInformationJob < ApplicationJob
           end
         end
       end
-    end
+    
   end
 end
